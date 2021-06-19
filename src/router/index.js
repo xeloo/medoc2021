@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import store from '../store'
 
 Vue.use(VueRouter)
 
@@ -8,22 +8,60 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: () => import("../layouts/Main.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import('../page/Home.vue')
+      }
+    ]
   },
   {
-    path: '/about',
+    path: '/login/',
+    name: 'Login',
+    component: () => import("../layouts/Login.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import('../page/Login.vue')
+      }
+    ]
+  },
+  {
+    path: '/logout/',
+    name: 'Logout',
+    beforeEnter: (to, from, next) => {
+      store.commit('auth/setAuth', false)
+      next('/login')
+    },
+  },
+  {
+    path: '/about/',
     name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    component: () => import("../layouts/Main.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import('../page/About.vue')
+      }
+    ]
   }
 ]
-
 const router = new VueRouter({
   mode: 'history',
+  scrollBehavior: () => ({
+    x: 0,
+    y: 0
+  }),
   base: process.env.BASE_URL,
-  routes
+  routes,
 })
-
+router.beforeEach((to, from, next) => {
+  if (to.path !== '/login' && !(store.state.auth.auth)){
+    next('/login')
+  }else if(to.path === '/login' && (store.state.auth.auth)){
+    next('/')
+  }
+  else next()
+})
 export default router
