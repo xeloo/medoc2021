@@ -17,6 +17,28 @@ const routes = [
     ]
   },
   {
+    path: '/pacients',
+    name: 'Pacients',
+    component: () => import("../layouts/Main.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import('../page/Pacients.vue')
+      }
+    ]
+  },
+  {
+    path: '/pacient/:id',
+    name: 'Pacient',
+    component: () => import("../layouts/Main.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import('../page/Pacient.vue')
+      }
+    ]
+  },
+  {
     path: '/login/',
     name: 'Login',
     component: () => import("../layouts/Login.vue"),

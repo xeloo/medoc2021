@@ -27,12 +27,31 @@ export const authService = {
   // },
 
   async getDiagnoseList() {
-    const DiagnoseList = await api.getDiagnoseList();
-    return DiagnoseList;
+    return await api.getDiagnoseList();
   },
+
   async getCriteria(diagnose) {
-    const Criteria = await api.getCriteria({diag: diagnose});
-    return Criteria;
+    return await api.getCriteria({diag: diagnose});
+  },
+// Поиск услуг
+async getServiceList(search, max = 20) {
+   return await api.getServiceList({q: search, max: max});
+  },
+  // Поиск препаратов
+  async getDrugList(search, max = 20) {
+    return await api.getDrugList({q: search, max: max});
+  },
+  // Получаем дашборд
+  async getChartData() {
+    return await api.getChartData();
+  },
+ // Получаем Пациентов
+  async getPatientList() {
+    return await api.getPatientList();
+  },
+  // Получаем Пациента и процедуры
+  async getPatient(id) {
+    return await api.getPatient({"id": id});
   },
 
   // async logout() {

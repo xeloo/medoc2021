@@ -18,12 +18,19 @@
             shaped
         >
           <v-card-text>
-            <h1>Страница входа</h1>
+            <h1>Вход в личный кабинет</h1>
+            <v-text-field
+                label="Логин"
+            ></v-text-field>
+            <v-text-field
+                label="Пароль"
+            ></v-text-field>
           </v-card-text>
           <v-card-actions>
             <v-btn
-                color="deep-purple lighten-2"
-                text
+                color="deep-purple"
+                block
+                dark
                 @click="auth()"
             >
               Войти
